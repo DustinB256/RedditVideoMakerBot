@@ -79,6 +79,7 @@ def shutdown() -> NoReturn:
 
 
 if __name__ == "__main__":
+    print(sys.argv)
     if sys.version_info.major != 3 or sys.version_info.minor not in [10, 11]:
         print(
             "Hey! Congratulations, you've made it so far (which is pretty rare with no Python 3.10). Unfortunately, this program only works on Python 3.10. Please install Python 3.10 and try again."
@@ -101,8 +102,9 @@ if __name__ == "__main__":
         )
         sys.exit()
     try:
-        if config["reddit"]["thread"]["post_id"]:
-            for index, post_id in enumerate(config["reddit"]["thread"]["post_id"].split("+")):
+        specificPost = len(sys.argv) > 1 and sys.argv[1] or config["reddit"]["thread"]["post_id"]
+        if specificPost:
+            for index, post_id in enumerate(specificPost.split("+")):
                 index += 1
                 print_step(
                     f'on the {index}{("st" if index % 10 == 1 else ("nd" if index % 10 == 2 else ("rd" if index % 10 == 3 else "th")))} post of {len(config["reddit"]["thread"]["post_id"].split("+"))}'
